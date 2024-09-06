@@ -3,7 +3,10 @@ package main
 import (
 	"database/sql"
 	"github.com/BulizhnikGames/hideout/db"
+	"github.com/BulizhnikGames/hideout/internal/ws"
+	"github.com/BulizhnikGames/hideout/router"
 	"github.com/BulizhnikGames/hideout/tools"
+	_ "github.com/lib/pq"
 	"log"
 )
 
@@ -16,4 +19,9 @@ func main() {
 	}
 	database := db.New(dbConn)
 
+	hub := ws.NewHub(database)
+	wsHandler := ws.NewHandler(hub)
+
+	router.InitRouter(wsHandler)
+	router.Start("localhost:" + tools.GetPort())
 }

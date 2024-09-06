@@ -1,8 +1,8 @@
 package ws
 
 import (
-	"github.com/BulizhnikGames/hideout/tools"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
@@ -25,14 +25,13 @@ func (h *Handler) CreateRoom(c *gin.Context) {
 		return
 	}
 
-	var id string
-
-	for {
-		id = tools.GetRoomID(tools.RoomIDLength)
-		_, ok := h.hub.Rooms[id]
-		if !ok {
-			break
-		}
+	room, err := h.hub.CreateNewRoom(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
+	log.Printf("Created new room with ID: %s", room.ID)
+
+	c.JSON(http.StatusOK, req)
 }
