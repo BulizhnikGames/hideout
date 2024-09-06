@@ -11,6 +11,7 @@ func InitRouter(wsHandler *ws.Handler) {
 	r = gin.Default()
 
 	r.POST("/play", wsHandler.CreateRoom)
+	r.GET("/play/:roomID", wsHandler.JoinRoom)
 }
 
 func Start(addr string) error {

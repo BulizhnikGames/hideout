@@ -22,6 +22,8 @@ func main() {
 	hub := ws.NewHub(database)
 	wsHandler := ws.NewHandler(hub)
 
+	go hub.Run()
+
 	router.InitRouter(wsHandler)
 	router.Start("localhost:" + tools.GetPort())
 }

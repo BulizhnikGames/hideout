@@ -1,7 +1,9 @@
 package ws
 
 import (
+	"github.com/BulizhnikGames/hideout/internal/packets"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 )
@@ -10,8 +12,10 @@ type Handler struct {
 	hub *Hub
 }
 
-type CreateRoomReq struct {
-	Username string `json:"username"`
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin:     func(r *http.Request) bool { return true },
 }
 
 func NewHandler(h *Hub) *Handler {
@@ -19,12 +23,6 @@ func NewHandler(h *Hub) *Handler {
 }
 
 func (h *Handler) CreateRoom(c *gin.Context) {
-	var req CreateRoomReq
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
 	room, err := h.hub.CreateNewRoom(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -33,5 +31,55 @@ func (h *Handler) CreateRoom(c *gin.Context) {
 
 	log.Printf("Created new room with ID: %s", room.ID)
 
-	c.JSON(http.StatusOK, req)
+	c.JSON(http.StatusOK, room)
+}
+
+func (h *Handler) JoinRoom(c *gin.Context) {
+	username := c.GetHeader("username")
+	if username == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "username is empty"})
+		return
+	}
+
+	room := c.Param("roomID")
+	if _, ok := h.hub.Rooms[room]; !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "incorrect roomID"})
+		return
+	}
+
+	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var admin bool
+	if len(h.hub.Rooms[room].Players) == 0 {
+		admin = true
+	} else {
+		admin = false
+	}
+
+	player := &Player{
+		Conn:     conn,
+		Messages: make(chan *Message, 10),
+		Username: username,
+		RoomID:   room,
+		Admin:    admin,
+	}
+
+	log.Printf("Added new player (%s) to room (%s), is admin: %v", player.Username, player.RoomID, player.Admin)
+
+	message := &Message{
+		Type:     packets.TextMessage,
+		RoomID:   room,
+		Username: username,
+		Data:     []byte("Player (" + username + ") joined room"),
+	}
+
+	h.hub.Register <- player
+	h.hub.Broadcast <- message
+
+	go player.writeMessage()
+	player.readMessage(h.hub)
 }
