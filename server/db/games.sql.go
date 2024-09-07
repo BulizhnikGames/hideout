@@ -12,6 +12,99 @@ import (
 	"github.com/google/uuid"
 )
 
+const clearGames = `-- name: ClearGames :exec
+DELETE FROM games
+`
+
+func (q *Queries) ClearGames(ctx context.Context) error {
+	_, err := q.db.ExecContext(ctx, clearGames)
+	return err
+}
+
+const getApocalypse = `-- name: GetApocalypse :one
+SELECT val FROM apocalypses
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetApocalypse(ctx context.Context) (string, error) {
+	row := q.db.QueryRowContext(ctx, getApocalypse)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getPlace = `-- name: GetPlace :one
+SELECT val FROM places
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetPlace(ctx context.Context) (string, error) {
+	row := q.db.QueryRowContext(ctx, getPlace)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getResources = `-- name: GetResources :many
+SELECT val FROM resources
+ORDER BY RANDOM()
+LIMIT $1
+`
+
+func (q *Queries) GetResources(ctx context.Context, limit int32) ([]string, error) {
+	rows, err := q.db.QueryContext(ctx, getResources, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var val string
+		if err := rows.Scan(&val); err != nil {
+			return nil, err
+		}
+		items = append(items, val)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getRooms = `-- name: GetRooms :many
+SELECT val FROM rooms
+ORDER BY RANDOM()
+LIMIT $1
+`
+
+func (q *Queries) GetRooms(ctx context.Context, limit int32) ([]string, error) {
+	rows, err := q.db.QueryContext(ctx, getRooms, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var val string
+		if err := rows.Scan(&val); err != nil {
+			return nil, err
+		}
+		items = append(items, val)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const startGame = `-- name: StartGame :one
 INSERT INTO games (id, apocalypse, size, time, food, place, rooms, resources)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)

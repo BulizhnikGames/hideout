@@ -1,7 +1,6 @@
 package ws
 
 import (
-	"github.com/BulizhnikGames/hideout/internal/packets"
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 	"log"
@@ -54,11 +53,14 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 		}
 
 		packetType := packet[0]
-		packetData := packet[1:]
+		var packetData []byte
+		if len(packet) > 0 {
+			packetData = packet[1:]
+		}
 
 		log.Printf("packetType: %v", packetType)
 
-		if handler, ok := packets.PacketsTable[packetType]; ok {
+		if handler, ok := HandlersTable[packetType]; ok {
 			msg := &Message{
 				Type:     packetType,
 				RoomID:   p.RoomID,
@@ -67,7 +69,7 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			}
 			handler(hub, msg)
 		} else {
-			log.Printf("packetType %v not found in PacketsTable", packetType)
+			log.Printf("packetType %v not found in HandlersTable", packetType)
 		}
 	}
 }

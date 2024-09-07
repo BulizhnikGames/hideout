@@ -1,9 +1,9 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"github.com/BulizhnikGames/hideout/db"
-	"github.com/BulizhnikGames/hideout/internal/packets"
 	"github.com/BulizhnikGames/hideout/internal/ws"
 	"github.com/BulizhnikGames/hideout/router"
 	"github.com/BulizhnikGames/hideout/tools"
@@ -13,7 +13,7 @@ import (
 
 func main() {
 	tools.Init()
-	packets.InitTable()
+	ws.InitTable()
 
 	dbConn, err := sql.Open("postgres", tools.GetDBUrl())
 	if err != nil {
@@ -21,11 +21,19 @@ func main() {
 	}
 	database := db.New(dbConn)
 
+	err = db.InitTables(context.Background(), database)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	hub := ws.NewHub(database)
 	wsHandler := ws.NewHandler(hub)
 
 	go hub.Run()
 
 	router.InitRouter(wsHandler)
-	router.Start("localhost:" + tools.GetPort())
+	err = router.Start("localhost:" + tools.GetPort())
+	if err != nil {
+		log.Fatalf("Router failed: %v", err)
+	}
 }

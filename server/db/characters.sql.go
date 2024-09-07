@@ -13,23 +13,23 @@ import (
 )
 
 const createCharacter = `-- name: CreateCharacter :one
-INSERT INTO characters (id, game_id, main, body, health, job, hobby, phobia, inventory, info, ability)
+INSERT INTO characters (id, game_id, main, body, health, job, hobby, phobia, item, info, ability)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-RETURNING id, game_id, main, body, health, job, hobby, phobia, inventory, info, ability
+RETURNING id, game_id, main, body, health, job, hobby, phobia, item, info, ability
 `
 
 type CreateCharacterParams struct {
-	ID        uuid.UUID
-	GameID    uuid.UUID
-	Main      sql.NullString
-	Body      sql.NullString
-	Health    sql.NullString
-	Job       sql.NullString
-	Hobby     sql.NullString
-	Phobia    sql.NullString
-	Inventory sql.NullString
-	Info      sql.NullString
-	Ability   sql.NullString
+	ID      uuid.UUID
+	GameID  uuid.UUID
+	Main    sql.NullString
+	Body    sql.NullString
+	Health  sql.NullString
+	Job     sql.NullString
+	Hobby   sql.NullString
+	Phobia  sql.NullString
+	Item    sql.NullString
+	Info    sql.NullString
+	Ability sql.NullString
 }
 
 func (q *Queries) CreateCharacter(ctx context.Context, arg CreateCharacterParams) (Character, error) {
@@ -42,7 +42,7 @@ func (q *Queries) CreateCharacter(ctx context.Context, arg CreateCharacterParams
 		arg.Job,
 		arg.Hobby,
 		arg.Phobia,
-		arg.Inventory,
+		arg.Item,
 		arg.Info,
 		arg.Ability,
 	)
@@ -56,9 +56,127 @@ func (q *Queries) CreateCharacter(ctx context.Context, arg CreateCharacterParams
 		&i.Job,
 		&i.Hobby,
 		&i.Phobia,
-		&i.Inventory,
+		&i.Item,
 		&i.Info,
 		&i.Ability,
 	)
 	return i, err
+}
+
+const getAbility = `-- name: GetAbility :one
+SELECT abilities.val FROM abilities
+LEFT JOIN characters ON characters.ability = abilities.val
+WHERE characters.game_id = $1 AND characters.abilitiy IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetAbility(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getAbility, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getBody = `-- name: GetBody :one
+SELECT val FROM bodies
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetBody(ctx context.Context) (string, error) {
+	row := q.db.QueryRowContext(ctx, getBody)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getHealth = `-- name: GetHealth :one
+SELECT health.val FROM health
+LEFT JOIN characters ON characters.health = health.val
+WHERE characters.game_id = $1 AND characters.health IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetHealth(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getHealth, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getHobby = `-- name: GetHobby :one
+SELECT hobbies.val FROM hobbies
+LEFT JOIN characters ON characters.hobby = hobbies.val
+WHERE characters.game_id = $1 AND characters.hobby IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetHobby(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getHobby, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getInfo = `-- name: GetInfo :one
+SELECT info.val FROM info
+LEFT JOIN characters ON characters.info = info.val
+WHERE characters.game_id = $1 AND characters.info IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetInfo(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getInfo, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getItem = `-- name: GetItem :one
+SELECT items.val FROM items
+LEFT JOIN characters ON characters.item = items.val
+WHERE characters.game_id = $1 AND characters.item IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetItem(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getItem, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getJob = `-- name: GetJob :one
+SELECT jobs.val FROM jobs
+LEFT JOIN characters ON characters.job = jobs.val
+WHERE characters.game_id = $1 AND characters.job IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetJob(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getJob, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
+}
+
+const getPhobia = `-- name: GetPhobia :one
+SELECT phobias.val FROM phobias
+LEFT JOIN characters ON characters.phobia = phobias.val
+WHERE characters.game_id = $1 AND characters.phobia IS NULL
+ORDER BY RANDOM()
+LIMIT 1
+`
+
+func (q *Queries) GetPhobia(ctx context.Context, gameID uuid.UUID) (string, error) {
+	row := q.db.QueryRowContext(ctx, getPhobia, gameID)
+	var val string
+	err := row.Scan(&val)
+	return val, err
 }

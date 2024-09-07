@@ -5,41 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/tools/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/tools/constants.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/characters.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/characters.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/games.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/games.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/models.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/queries/characters.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/characters.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/queries/games.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/games.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/schema/001_games.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/schema/001_games.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/schema/002_characters.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/schema/002_characters.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/hub.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
   <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "BulizhnikGames"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BulizhnikGames&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/BulizhnikGames/hideout.git",
-    "accountId": "cc1ac764-1f92-468f-8cee-8052dac31244"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BulizhnikGames/hideout.git&quot;,
+    &quot;accountId&quot;: &quot;cc1ac764-1f92-468f-8cee-8052dac31244&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2lhuC9cl9VnSWtFBclrbMlT1WNg" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
@@ -47,12 +69,19 @@
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/Kirill",
+    "last_opened_file_path": "F:/gogarbage/hideout",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\goprojects\hideout\server\db\init\game" />
+      <recent name="F:\goprojects\hideout\server\db\schema" />
+      <recent name="F:\goprojects\hideout\server\db" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

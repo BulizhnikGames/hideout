@@ -10,7 +10,7 @@ CREATE TABLE characters
     job TEXT,
     hobby TEXT,
     phobia TEXT,
-    inventory TEXT,
+    item TEXT,
     info TEXT,
     ability TEXT
 );

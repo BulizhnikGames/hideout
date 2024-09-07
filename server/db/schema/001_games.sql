@@ -12,6 +12,7 @@ CREATE TABLE games
     resources  TEXT
 );
 
+
 -- +goose Down
 
 DROP TABLE games;
