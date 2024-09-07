@@ -56,21 +56,18 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 		packetType := packet[0]
 		packetData := packet[1:]
 
-		//TODO handle different types of packages
+		log.Printf("packetType: %v", packetType)
 
-		if packetType == packets.TextMessage {
-			log.Printf("Got message: %s", string(packetData))
+		if handler, ok := packets.PacketsTable[packetType]; ok {
+			msg := &Message{
+				Type:     packetType,
+				RoomID:   p.RoomID,
+				Username: p.Username,
+				Data:     packetData,
+			}
+			handler(hub, msg)
 		} else {
-			log.Printf("Got message (%v): %v", packetType, packetData)
+			log.Printf("packetType %v not found in PacketsTable", packetType)
 		}
-
-		msg := &Message{
-			Type:     packetType,
-			RoomID:   p.RoomID,
-			Username: p.Username,
-			Data:     packetData,
-		}
-
-		hub.Broadcast <- msg
 	}
 }

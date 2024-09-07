@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"github.com/BulizhnikGames/hideout/db"
+	"github.com/BulizhnikGames/hideout/internal/packets"
 	"github.com/BulizhnikGames/hideout/internal/ws"
 	"github.com/BulizhnikGames/hideout/router"
 	"github.com/BulizhnikGames/hideout/tools"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 	tools.Init()
+	packets.InitTable()
 
 	dbConn, err := sql.Open("postgres", tools.GetDBUrl())
 	if err != nil {
