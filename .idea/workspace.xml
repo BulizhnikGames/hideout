@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/characters.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/characters.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/games.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/games.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/queries/characters.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/characters.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/queries/games.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/games.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/schema/001_games.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/schema/001_games.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/schema/002_characters.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/schema/002_characters.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/packets/handler.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/hub.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
-    </list>
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Initializing tables on start, generating game when game started" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,6 +79,10 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initializing tables on start, generating game when game started" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initializing tables on start, generating game when game started" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
