@@ -8,7 +8,7 @@ import (
 
 var HandlersTable map[byte]func(hub *Hub, packet *Message)
 
-func InitTable() {
+func Init() {
 	HandlersTable = make(map[byte]func(hub *Hub, packet *Message))
 	HandlersTable[packets.TextMessage] = HandleTextMessage
 	HandlersTable[packets.StartGame] = HandleStartGame

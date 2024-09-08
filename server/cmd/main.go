@@ -13,15 +13,14 @@ import (
 
 func main() {
 	tools.Init()
-	ws.InitTable()
+	ws.Init()
 
 	dbConn, err := sql.Open("postgres", tools.GetDBUrl())
 	if err != nil {
 		log.Fatal(err)
 	}
 	database := db.New(dbConn)
-
-	err = db.InitTables(context.Background(), database)
+	err = db.Init(context.Background(), database)
 	if err != nil {
 		log.Fatal(err)
 	}
