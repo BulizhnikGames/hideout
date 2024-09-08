@@ -58,8 +58,6 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			packetData = packet[1:]
 		}
 
-		log.Printf("packetType: %v", packetType)
-
 		if handler, ok := HandlersTable[packetType]; ok {
 			msg := &Message{
 				Type:     packetType,

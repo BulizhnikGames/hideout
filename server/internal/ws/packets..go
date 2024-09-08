@@ -23,8 +23,7 @@ func HandleTextMessage(hub *Hub, packet *Message) {
 
 func HandleStartGame(hub *Hub, packet *Message) {
 	if hub.Rooms[packet.RoomID].Players[packet.Username].Admin {
-		log.Println("Got start game packet")
-		id, err := hub.StartGame(context.Background(), hub.Rooms[packet.RoomID])
+		id, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
 		if err != nil {
 			log.Printf("Couldnt start game: %v", err)
 			return

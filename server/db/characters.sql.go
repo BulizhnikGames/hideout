@@ -64,9 +64,11 @@ func (q *Queries) CreateCharacter(ctx context.Context, arg CreateCharacterParams
 }
 
 const getAbility = `-- name: GetAbility :one
-SELECT abilities.val FROM abilities
-LEFT JOIN characters ON characters.ability = abilities.val
-WHERE characters.game_id = $1 AND characters.abilitiy IS NULL
+SELECT val FROM abilities
+WHERE val NOT IN (
+    SELECT ability FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -92,9 +94,11 @@ func (q *Queries) GetBody(ctx context.Context) (string, error) {
 }
 
 const getHealth = `-- name: GetHealth :one
-SELECT health.val FROM health
-LEFT JOIN characters ON characters.health = health.val
-WHERE characters.game_id = $1 AND characters.health IS NULL
+SELECT val FROM health
+WHERE val NOT IN (
+    SELECT health FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -107,9 +111,11 @@ func (q *Queries) GetHealth(ctx context.Context, gameID uuid.UUID) (string, erro
 }
 
 const getHobby = `-- name: GetHobby :one
-SELECT hobbies.val FROM hobbies
-LEFT JOIN characters ON characters.hobby = hobbies.val
-WHERE characters.game_id = $1 AND characters.hobby IS NULL
+SELECT val FROM hobbies
+WHERE val NOT IN (
+    SELECT hobby FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -122,9 +128,11 @@ func (q *Queries) GetHobby(ctx context.Context, gameID uuid.UUID) (string, error
 }
 
 const getInfo = `-- name: GetInfo :one
-SELECT info.val FROM info
-LEFT JOIN characters ON characters.info = info.val
-WHERE characters.game_id = $1 AND characters.info IS NULL
+SELECT val FROM info
+WHERE val NOT IN (
+    SELECT info FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -137,9 +145,11 @@ func (q *Queries) GetInfo(ctx context.Context, gameID uuid.UUID) (string, error)
 }
 
 const getItem = `-- name: GetItem :one
-SELECT items.val FROM items
-LEFT JOIN characters ON characters.item = items.val
-WHERE characters.game_id = $1 AND characters.item IS NULL
+SELECT val FROM items
+WHERE val NOT IN (
+    SELECT item FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -152,9 +162,11 @@ func (q *Queries) GetItem(ctx context.Context, gameID uuid.UUID) (string, error)
 }
 
 const getJob = `-- name: GetJob :one
-SELECT jobs.val FROM jobs
-LEFT JOIN characters ON characters.job = jobs.val
-WHERE characters.game_id = $1 AND characters.job IS NULL
+SELECT val FROM jobs
+WHERE val NOT IN (
+    SELECT job FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `
@@ -167,9 +179,11 @@ func (q *Queries) GetJob(ctx context.Context, gameID uuid.UUID) (string, error) 
 }
 
 const getPhobia = `-- name: GetPhobia :one
-SELECT phobias.val FROM phobias
-LEFT JOIN characters ON characters.phobia = phobias.val
-WHERE characters.game_id = $1 AND characters.phobia IS NULL
+SELECT val FROM phobias
+WHERE val NOT IN (
+    SELECT phobia FROM characters
+    WHERE game_id = $1
+)
 ORDER BY RANDOM()
 LIMIT 1
 `

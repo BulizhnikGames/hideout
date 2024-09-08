@@ -117,7 +117,7 @@ func (h *Hub) GetEmptyRoomID(c context.Context) string {
 	}
 }
 
-func (h *Hub) StartGame(c context.Context, r *Room) (uuid.UUID, error) {
+func (h *Hub) startGame(c context.Context, r *Room) (uuid.UUID, error) {
 	ctx, cancel := context.WithTimeout(c, h.Timeout)
 	defer cancel()
 
@@ -155,7 +155,7 @@ func (h *Hub) StartGame(c context.Context, r *Room) (uuid.UUID, error) {
 	}
 	cnt = rand.Intn(5) + 3 // [3; 7]
 	timeLimit := rand.Intn(cnt*12) + 12
-	cnt = rand.Intn(timeLimit/2-12) + 12
+	cnt = rand.Intn(timeLimit/2-6) + 6
 	food := rand.Intn(cnt*2) + timeLimit - cnt
 	var people int
 	if len(r.Players) < 6 {
@@ -180,10 +180,71 @@ func (h *Hub) StartGame(c context.Context, r *Room) (uuid.UUID, error) {
 		return uuid.Nil, err
 	}
 
-	log.Printf("Game with ID: %s in room %s has been started", game.ID, r.ID)
-	r.GameID = game.ID
+	for _, player := range r.Players {
+		id, err := h.createCharacter(ctx, game.ID)
+		if err != nil {
+			return uuid.Nil, errors.New("Error creating character for player " + player.Username + " in room " + r.ID + ": " + err.Error())
+		}
+		player.CharacterID = id
+	}
 
-	// TODO CREATE CHARACTERS FOR ALL PLAYERS IN ROOM
+	r.GameID = game.ID
+	log.Printf("Game with ID: %s in room %s has been started", game.ID, r.ID)
 
 	return game.ID, nil
+}
+
+func (h *Hub) createCharacter(ctx context.Context, gameID uuid.UUID) (uuid.UUID, error) {
+	main := tools.GenerateMainStringForCharacter()
+	body, err := h.DB.GetBody(ctx)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	health, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetHealth)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	job, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetJob)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	hobby, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetHobby)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	phobia, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetPhobia)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	item, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetItem)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	info, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetInfo)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	ability, err := tools.GenerateNewValueForCharacter(ctx, gameID, h.DB.GetAbility)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	character, err := h.DB.CreateCharacter(ctx, db.CreateCharacterParams{
+		ID:      uuid.New(),
+		GameID:  gameID,
+		Main:    sql.NullString{String: main, Valid: true},
+		Body:    sql.NullString{String: body, Valid: true},
+		Health:  sql.NullString{String: health, Valid: true},
+		Job:     sql.NullString{String: job, Valid: true},
+		Hobby:   sql.NullString{String: hobby, Valid: true},
+		Phobia:  sql.NullString{String: phobia, Valid: true},
+		Item:    sql.NullString{String: item, Valid: true},
+		Info:    sql.NullString{String: info, Valid: true},
+		Ability: sql.NullString{String: ability, Valid: true},
+	})
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	return character.ID, nil
 }
