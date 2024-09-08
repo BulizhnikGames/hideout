@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Initializing all tables for generation, added all source files with specs">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Generating characters on game start">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/characters.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/characters.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/queries/characters.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/characters.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/internal/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/hub.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +36,9 @@
     &quot;accountId&quot;: &quot;cc1ac764-1f92-468f-8cee-8052dac31244&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -65,7 +64,8 @@
     &quot;last_opened_file_path&quot;: &quot;F:/gogarbage/hideout&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -90,7 +90,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initializing tables on start, generating game when game started" />
     <MESSAGE value="Initializing all tables for generation, added all source files with specs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initializing all tables for generation, added all source files with specs" />
+    <MESSAGE value="Generating characters on game start" />
+    <option name="LAST_COMMIT_MESSAGE" value="Generating characters on game start" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
