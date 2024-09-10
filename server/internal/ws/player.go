@@ -16,10 +16,10 @@ type Player struct {
 }
 
 type Message struct {
-	Type     byte   `json:"type"`
+	Type     string `json:"type"`
 	RoomID   string `json:"roomID"`
 	Username string `json:"username"`
-	Data     []byte `json:"data"`
+	Data     string `json:"data"`
 }
 
 func (p *Player) writeMessage() { //API gets new packet from other client, this func sends it to this client
@@ -33,6 +33,9 @@ func (p *Player) writeMessage() { //API gets new packet from other client, this 
 			return
 		}
 
+		//log.Printf("message data in bytes: %v", (*FormatMessageForJS(message)).Data)
+		//log.Printf("message data: %s", string((*FormatMessageForJS(message)).Data))
+		//log.Printf("message data in string: %s", string((*FormatMessageForJS(message)).Data))
 		p.Conn.WriteJSON(message)
 	}
 }
@@ -52,10 +55,12 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			break
 		}
 
-		packetType := packet[0]
-		var packetData []byte
-		if len(packet) > 0 {
-			packetData = packet[1:]
+		log.Printf("recv: %s", string(packet[1:len(packet)-1]))
+
+		packetType := string(packet[1])
+		packetData := ""
+		if len(packet) > 3 {
+			packetData = string(packet[2 : len(packetData)-1])
 		}
 
 		if handler, ok := HandlersTable[packetType]; ok {

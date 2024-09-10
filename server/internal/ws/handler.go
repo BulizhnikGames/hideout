@@ -35,7 +35,7 @@ func (h *Handler) CreateRoom(c *gin.Context) {
 }
 
 func (h *Handler) JoinRoom(c *gin.Context) {
-	username := c.GetHeader("username")
+	username := c.Query("username")
 	if username == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "username is empty"})
 		return
@@ -74,7 +74,7 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 		Type:     packets.TextMessage,
 		RoomID:   room,
 		Username: username,
-		Data:     []byte("Player (" + username + ") joined room"),
+		Data:     "Player (" + username + ") joined room",
 	}
 
 	h.hub.Register <- player

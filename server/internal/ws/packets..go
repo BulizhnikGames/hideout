@@ -6,17 +6,16 @@ import (
 	"log"
 )
 
-var HandlersTable map[byte]func(hub *Hub, packet *Message)
+var HandlersTable map[string]func(hub *Hub, packet *Message)
 
 func Init() {
-	HandlersTable = make(map[byte]func(hub *Hub, packet *Message))
+	HandlersTable = make(map[string]func(hub *Hub, packet *Message))
 	HandlersTable[packets.TextMessage] = HandleTextMessage
 	HandlersTable[packets.StartGame] = HandleStartGame
 }
 
 func HandleTextMessage(hub *Hub, packet *Message) {
-	msg := string(packet.Data)
-	log.Printf("Text message: %s", msg)
+	log.Printf("Text message: %s", packet.Data)
 
 	hub.Broadcast <- packet
 }
@@ -32,7 +31,7 @@ func HandleStartGame(hub *Hub, packet *Message) {
 			Type:     packets.TextMessage,
 			Username: packet.Username,
 			RoomID:   packet.RoomID,
-			Data:     []byte("Game with id " + id.String() + " was started!"),
+			Data:     "Game with id " + id.String() + " was started!",
 		}
 		hub.Broadcast <- msg
 	} else {

@@ -44,6 +44,14 @@ func (h *Hub) Run() {
 			if r, ok := h.Rooms[player.RoomID]; ok {
 				if _, ok = r.Players[player.Username]; !ok {
 					r.Players[player.Username] = player
+					if len(r.Players) == 1 {
+						h.Broadcast <- &Message{
+							Type:     packets.NewAdmin,
+							RoomID:   player.RoomID,
+							Username: "",
+							Data:     player.Username,
+						}
+					}
 				}
 			}
 		case player := <-h.Unregister:
@@ -59,6 +67,12 @@ func (h *Hub) Run() {
 						if player.Admin {
 							for _, newAdmin := range r.Players {
 								newAdmin.Admin = true
+								h.Broadcast <- &Message{
+									Type:     packets.NewAdmin,
+									RoomID:   player.RoomID,
+									Username: "",
+									Data:     newAdmin.Username,
+								}
 								log.Printf("Player (%s) in room (%s) is now admin", newAdmin.Username, newAdmin.RoomID)
 								break
 							}
@@ -67,8 +81,8 @@ func (h *Hub) Run() {
 						h.Broadcast <- &Message{
 							Type:     packets.TextMessage,
 							RoomID:   player.RoomID,
-							Username: player.Username,
-							Data:     []byte("Player (" + player.Username + ") left the room"),
+							Username: "",
+							Data:     "Player (" + player.Username + ") left the room",
 						}
 					}
 				}

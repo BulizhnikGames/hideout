@@ -4,9 +4,40 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Generating characters on game start">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Client side main and wait room pages">
+      <change afterPath="$PROJECT_DIR$/.idea/go.imports.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.eslintrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/constants/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/modules/websocket_provider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/next.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/postcss.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/_app.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/_document.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/api/hello.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/fonts/GeistMonoVF.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/fonts/GeistVF.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/styles/globals.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/tailwind.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/boot.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/boot.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/server/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/server/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/internal/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/hub.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/router/router.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +67,9 @@
     &quot;accountId&quot;: &quot;cc1ac764-1f92-468f-8cee-8052dac31244&quot;
   }
 }</component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -65,11 +99,22 @@
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;F:\\goprojects\\hideout\\client\\node_modules\\typescript\\lib&quot;
   }
 }</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\goprojects\hideout\server\internal\ws" />
       <recent name="F:\goprojects\hideout\server\db\init\game" />
       <recent name="F:\goprojects\hideout\server\db\schema" />
       <recent name="F:\goprojects\hideout\server\db" />
@@ -86,12 +131,19 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/client/tailwind.config.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initializing tables on start, generating game when game started" />
     <MESSAGE value="Initializing all tables for generation, added all source files with specs" />
     <MESSAGE value="Generating characters on game start" />
-    <option name="LAST_COMMIT_MESSAGE" value="Generating characters on game start" />
+    <MESSAGE value="API logic improved" />
+    <MESSAGE value="Client side main and wait room pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Client side main and wait room pages" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

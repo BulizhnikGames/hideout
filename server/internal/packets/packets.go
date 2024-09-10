@@ -1,4 +1,5 @@
 package packets
 
-const TextMessage byte = 0
-const StartGame byte = 1
+const TextMessage string = "0" // both
+const NewAdmin string = "1"    // from server
+const StartGame string = "2"   // from client

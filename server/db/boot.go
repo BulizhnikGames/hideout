@@ -100,7 +100,7 @@ func initFile(ctx context.Context, path string, dbFunc func(ctx context.Context,
 	}
 	values := strings.Split(string(data), "\n")
 	for _, value := range values {
-		if value == "" {
+		if value == "" || value[0] == 13 {
 			continue
 		}
 		err = dbFunc(ctx, value)
