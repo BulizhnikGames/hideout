@@ -1,17 +1,23 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect, Fragment} from "react";
 import { useRouter } from 'next/router'
 import {WS_URL, TextMessage, NewAdmin, StartGame} from "../../../constants";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import LinkBox from './link'
 
-export type Message = {
-    type: string
-    roomID: string
-    username: string
-    data: string
+export type Game = {
+    id: string
+    apocalypse: string
+    size: number
+    time: number
+    food: number
+    place: string
+    rooms: string
+    resources: string
 }
 
 const room = () => {
     const [admin, setAdmin] = useState(false)
+    const [game, setGame] = useState({})
 
     const router = useRouter()
 
@@ -62,7 +68,7 @@ const room = () => {
                         maxLength={14}
                     />
                     <button className='p-3 mt-6 rounded-md bg-blue font-bold text-3xl text-white' type='submit' onClick={handleConnetToRoomButton}>
-                        ПОДКЛЮЧИТЬСЯ К router.query.room
+                        ПОДКЛЮЧИТЬСЯ К {router.query.room}
                     </button>
                 </form>
             </div>
@@ -71,22 +77,27 @@ const room = () => {
         if (admin){
             return (
                 <div className='flex items-center justify-center min-w-full min-h-screen'>
-                    <form className='flex flex-col md:w-1/3'>
-                        <div className='text-5xl font-bold text-center'>
+                    <form className='flex flex-col md:w-4/15'>
+                        <div className='p-3 text-5xl font-bold text-center'>
                             <span className='text-blue'>ОЖИДАНИЕ ИГРОКОВ</span>
                         </div>
-                        <button className='p-3 mt-6 rounded-md bg-blue font-bold text-3xl text-white' type='submit' onClick={handleStartGameButton}>
+                        <LinkBox/>
+                        <button className='p-6 mt-6 rounded-md bg-blue font-bold text-3xl text-white' type='submit'
+                                onClick={handleStartGameButton}>
                             НАЧАТЬ ИГРУ!
                         </button>
                     </form>
                 </div>
-        )
+            )
         } else {
             return (
                 <div className='flex items-center justify-center min-w-full min-h-screen'>
-                    <div className='text-5xl font-bold text-center'>
-                        <span className='text-blue'>ОЖИДАНИЕ ИГРОКОВ</span>
-                    </div>
+                    <form className='flex flex-col md:w-4/15'>
+                        <div className='p-3 text-5xl font-bold text-center'>
+                            <span className='text-blue'>ОЖИДАНИЕ ИГРОКОВ</span>
+                        </div>
+                        <LinkBox/>
+                    </form>
                 </div>
             )
         }
