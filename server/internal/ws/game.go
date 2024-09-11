@@ -10,22 +10,22 @@ import (
 	"math/rand"
 )
 
-func (h *Hub) startGame(c context.Context, r *Room) (uuid.UUID, error) {
+func (h *Hub) startGame(c context.Context, r *Room) (db.Game, error) {
 	ctx, cancel := context.WithTimeout(c, h.Timeout)
 	defer cancel()
 
 	apocalypse, err := h.DB.GetApocalypse(ctx)
 	if err != nil {
-		return uuid.Nil, err
+		return db.Game{}, err
 	}
 	place, err := h.DB.GetPlace(ctx)
 	if err != nil {
-		return uuid.Nil, err
+		return db.Game{}, err
 	}
 	cnt := rand.Intn(6) + 3 // [3; 8]
 	roomsList, err := h.DB.GetRooms(ctx, int32(cnt))
 	if err != nil {
-		return uuid.Nil, err
+		return db.Game{}, err
 	}
 	var rooms string
 	for i, room := range roomsList {
@@ -37,7 +37,7 @@ func (h *Hub) startGame(c context.Context, r *Room) (uuid.UUID, error) {
 	cnt = rand.Intn(4) + 3 // [3; 6]
 	resourcesList, err := h.DB.GetResources(ctx, int32(cnt))
 	if err != nil {
-		return uuid.Nil, err
+		return db.Game{}, err
 	}
 	var resources string
 	for i, resource := range resourcesList {
@@ -70,13 +70,13 @@ func (h *Hub) startGame(c context.Context, r *Room) (uuid.UUID, error) {
 		Resources:  sql.NullString{String: resources, Valid: true},
 	})
 	if err != nil {
-		return uuid.Nil, err
+		return db.Game{}, err
 	}
 
 	for _, player := range r.Players {
 		id, err := h.createCharacter(ctx, game.ID)
 		if err != nil {
-			return uuid.Nil, errors.New("Error creating character for player " + player.Username + " in room " + r.ID + ": " + err.Error())
+			return db.Game{}, errors.New("Error creating character for player " + player.Username + " in room " + r.ID + ": " + err.Error())
 		}
 		player.CharacterID = id
 	}
@@ -84,5 +84,5 @@ func (h *Hub) startGame(c context.Context, r *Room) (uuid.UUID, error) {
 	r.GameID = game.ID
 	log.Printf("Game with ID: %s in room %s has been started", game.ID, r.ID)
 
-	return game.ID, nil
+	return game, nil
 }

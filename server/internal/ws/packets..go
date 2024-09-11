@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/BulizhnikGames/hideout/internal/packets"
 	"log"
+	"strconv"
 )
 
 var HandlersTable map[string]func(hub *Hub, packet *Message)
@@ -22,18 +23,26 @@ func HandleTextMessage(hub *Hub, packet *Message) {
 
 func HandleStartGame(hub *Hub, packet *Message) {
 	if hub.Rooms[packet.RoomID].Players[packet.Username].Admin {
-		id, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
+		game, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
 		if err != nil {
 			log.Printf("Couldnt start game: %v", err)
 			return
 		}
-		msg := &Message{
-			Type:     packets.TextMessage,
+		strconv.Itoa(10)
+		data := game.ID.String()
+		data += "&" + game.Apocalypse.String
+		data += "&" + strconv.Itoa(int(game.Size.Int32))
+		data += "&" + strconv.Itoa(int(game.Time.Int32))
+		data += "&" + strconv.Itoa(int(game.Food.Int32))
+		data += "&" + game.Place.String
+		data += "&" + game.Rooms.String
+		data += "&" + game.Resources.String
+		hub.Broadcast <- &Message{
+			Type:     packets.GameData,
 			Username: packet.Username,
 			RoomID:   packet.RoomID,
-			Data:     "Game with id " + id.String() + " was started!",
+			Data:     data,
 		}
-		hub.Broadcast <- msg
 	} else {
 		log.Println("Only admin can start game")
 	}

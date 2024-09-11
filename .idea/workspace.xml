@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Client side main and wait room pages">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Copying room link">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/constants/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/constants/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/play/link.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/link.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/hub.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +119,8 @@
     <MESSAGE value="Generating characters on game start" />
     <MESSAGE value="API logic improved" />
     <MESSAGE value="Client side main and wait room pages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Client side main and wait room pages" />
+    <MESSAGE value="Copying room link" />
+    <option name="LAST_COMMIT_MESSAGE" value="Copying room link" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

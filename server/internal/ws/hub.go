@@ -8,6 +8,7 @@ import (
 	"github.com/BulizhnikGames/hideout/tools"
 	"github.com/google/uuid"
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -32,7 +33,7 @@ func NewHub(db *db.Queries) *Hub {
 		DB:         db,
 		Register:   make(chan *Player),
 		Unregister: make(chan *Player),
-		Broadcast:  make(chan *Message, 20),
+		Broadcast:  make(chan *Message, 40),
 		Timeout:    time.Second * 4,
 	}
 }
@@ -44,6 +45,12 @@ func (h *Hub) Run() {
 			if r, ok := h.Rooms[player.RoomID]; ok {
 				if _, ok = r.Players[player.Username]; !ok {
 					r.Players[player.Username] = player
+					h.Broadcast <- &Message{
+						Type:     packets.PlayerJoined,
+						RoomID:   player.RoomID,
+						Username: player.Username,
+						Data:     strconv.Itoa(len(r.Players)),
+					}
 					if len(r.Players) == 1 {
 						h.Broadcast <- &Message{
 							Type:     packets.NewAdmin,
@@ -79,10 +86,10 @@ func (h *Hub) Run() {
 						}
 
 						h.Broadcast <- &Message{
-							Type:     packets.TextMessage,
+							Type:     packets.PlayerLeft,
 							RoomID:   player.RoomID,
-							Username: "",
-							Data:     "Player (" + player.Username + ") left the room",
+							Username: player.Username,
+							Data:     strconv.Itoa(len(r.Players)),
 						}
 					}
 				}

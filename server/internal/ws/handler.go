@@ -1,7 +1,6 @@
 package ws
 
 import (
-	"github.com/BulizhnikGames/hideout/internal/packets"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"log"
@@ -70,15 +69,7 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 
 	log.Printf("Added new player (%s) to room (%s), is admin: %v", player.Username, player.RoomID, player.Admin)
 
-	message := &Message{
-		Type:     packets.TextMessage,
-		RoomID:   room,
-		Username: username,
-		Data:     "Player (" + username + ") joined room",
-	}
-
 	h.hub.Register <- player
-	h.hub.Broadcast <- message
 
 	go player.writeMessage()
 	player.readMessage(h.hub)
