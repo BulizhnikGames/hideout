@@ -23,11 +23,12 @@ func HandleTextMessage(hub *Hub, packet *Message) {
 
 func HandleStartGame(hub *Hub, packet *Message) {
 	if hub.Rooms[packet.RoomID].Players[packet.Username].Admin {
-		game, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
+		game, characters, names, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
 		if err != nil {
 			log.Printf("Couldnt start game: %v", err)
 			return
 		}
+
 		strconv.Itoa(10)
 		data := game.ID.String()
 		data += "&" + game.Apocalypse.String
@@ -37,11 +38,32 @@ func HandleStartGame(hub *Hub, packet *Message) {
 		data += "&" + game.Place.String
 		data += "&" + game.Rooms.String
 		data += "&" + game.Resources.String
+
 		hub.Broadcast <- &Message{
 			Type:     packets.GameData,
 			Username: packet.Username,
 			RoomID:   packet.RoomID,
 			Data:     data,
+		}
+
+		for i, char := range *characters {
+			data = char.ID.String()
+			data += "&" + char.Main.String
+			data += "&" + char.Body.String
+			data += "&" + char.Health.String
+			data += "&" + char.Job.String
+			data += "&" + char.Hobby.String
+			data += "&" + char.Phobia.String
+			data += "&" + char.Item.String
+			data += "&" + char.Info.String
+			data += "&" + char.Ability.String
+
+			hub.Broadcast <- &Message{
+				Type:     packets.CharData,
+				Username: (*names)[i],
+				RoomID:   packet.RoomID,
+				Data:     data,
+			}
 		}
 	} else {
 		log.Println("Only admin can start game")

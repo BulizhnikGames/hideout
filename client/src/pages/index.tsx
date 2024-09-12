@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {API_URL} from '../../constants';
 import { useRouter } from 'next/router'
 
@@ -61,7 +61,7 @@ const index = () => {
 
     return (
         <div className='flex items-center justify-center min-w-full min-h-screen'>
-            <form className='flex flex-col md:w-1/5'>
+            <form className='flex flex-col w-3/4'>
                 <div className='text-5xl font-bold text-center'>
                     <span className='text-blue'>УБЕЖИЩЕ</span>
                 </div>

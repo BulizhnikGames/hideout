@@ -10,22 +10,22 @@ import (
 	"math/rand"
 )
 
-func (h *Hub) startGame(c context.Context, r *Room) (db.Game, error) {
+func (h *Hub) startGame(c context.Context, r *Room) (*db.Game, *[]db.Character, *[]string, error) {
 	ctx, cancel := context.WithTimeout(c, h.Timeout)
 	defer cancel()
 
 	apocalypse, err := h.DB.GetApocalypse(ctx)
 	if err != nil {
-		return db.Game{}, err
+		return nil, nil, nil, err
 	}
 	place, err := h.DB.GetPlace(ctx)
 	if err != nil {
-		return db.Game{}, err
+		return nil, nil, nil, err
 	}
 	cnt := rand.Intn(6) + 3 // [3; 8]
 	roomsList, err := h.DB.GetRooms(ctx, int32(cnt))
 	if err != nil {
-		return db.Game{}, err
+		return nil, nil, nil, err
 	}
 	var rooms string
 	for i, room := range roomsList {
@@ -37,7 +37,7 @@ func (h *Hub) startGame(c context.Context, r *Room) (db.Game, error) {
 	cnt = rand.Intn(4) + 3 // [3; 6]
 	resourcesList, err := h.DB.GetResources(ctx, int32(cnt))
 	if err != nil {
-		return db.Game{}, err
+		return nil, nil, nil, err
 	}
 	var resources string
 	for i, resource := range resourcesList {
@@ -70,19 +70,26 @@ func (h *Hub) startGame(c context.Context, r *Room) (db.Game, error) {
 		Resources:  sql.NullString{String: resources, Valid: true},
 	})
 	if err != nil {
-		return db.Game{}, err
+		return nil, nil, nil, err
 	}
 
+	players := make([]db.Character, len(r.Players))
+	names := make([]string, len(r.Players))
+	i := 0
 	for _, player := range r.Players {
-		id, err := h.createCharacter(ctx, game.ID)
+		players[i], err = h.createCharacter(ctx, game.ID)
 		if err != nil {
-			return db.Game{}, errors.New("Error creating character for player " + player.Username + " in room " + r.ID + ": " + err.Error())
+			return nil, nil, nil, errors.New("Error creating character for player " + player.Username + " in room " + r.ID + ": " + err.Error())
 		}
-		player.CharacterID = id
+
+		player.CharacterID = players[i].ID
+		names[i] = player.Username
+
+		i++
 	}
 
 	r.GameID = game.ID
 	log.Printf("Game with ID: %s in room %s has been started", game.ID, r.ID)
 
-	return game, nil
+	return &game, &players, &names, nil
 }

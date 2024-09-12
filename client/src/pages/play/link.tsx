@@ -1,32 +1,23 @@
 import React from 'react'
 import {useRouter} from "next/router";
-import {CiStickyNote} from "react-icons/ci";
 
 const LinkBox = () => {
     const router = useRouter()
 
-    const copyLinkToRoom = (e: React.SyntheticEvent) => {
+    const copyLinkToRoom = async (e: React.SyntheticEvent) => {
         e.preventDefault()
-        navigator.clipboard.writeText(`http://localhost:3000/play/${router.query.room}`)
+        try{
+            await navigator.clipboard.writeText(`http://192.168.103.132:3000/play/${router.query.room}`)
+        } catch (err){
+            console.log(err)
+        }
         return
     }
 
-    /*return (
-        <button className='p-6 mt-6 rounded-md bg-lightblue text-white text-3xl font-bold' onClick={copyLinkToRoom}>
+    return (
+        <button className='p-6 mt-6 rounded-md bg-lightblue text-white text-2xl font-bold' onClick={copyLinkToRoom}>
             http://hideout/play/{router.query.room}
         </button>
-    )*/
-    return (
-        <div className='p-4 flex justify-center items-end space-x-2'>
-            <span className='py-6 rounded-md text-lightblue text-6xl font-bold'>
-                http://hideout/play/{router.query.room}
-            </span>
-            <button
-                className='bg-white hover:bg-gray-400 rounded inline-flex items-center' onClick={copyLinkToRoom}>
-                <CiStickyNote size='100'/>
-            </button>
-        </div>
-
     )
 }
 
