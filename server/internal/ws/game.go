@@ -48,7 +48,10 @@ func (h *Hub) startGame(c context.Context, r *Room) (*db.Game, *[]db.Character, 
 	}
 	cnt = rand.Intn(5) + 3 // [3; 7]
 	timeLimit := rand.Intn(cnt*12) + 12
-	cnt = rand.Intn(timeLimit/2-6) + 6
+	cnt = 6
+	if timeLimit > 25 {
+		cnt = rand.Intn(timeLimit/2-12) + 6
+	}
 	food := rand.Intn(cnt*2) + timeLimit - cnt
 	var people int
 	if len(r.Players) < 6 {

@@ -5,7 +5,7 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import LinkBox from './link'
 import BlueText from "@/pages/play/blue";
 import LightText from "@/pages/play/light";
-import Top from "@/pages/play/top"
+import Char from "@/pages/play/charinfo"
 
 type Character = {
     username: string
@@ -35,13 +35,14 @@ const room = () => {
     })
     const [chars, setChars] = useState<Array<Character>>([])
     const [playerCount, changePlayerCount] = useState(0)
+    const [selectedChar, selectOther] = useState(0)
 
     const router = useRouter()
 
     const [username, setUsername] = useState(`${router.query.username === undefined ? '' : router.query.username}`)
 
     const { readyState, sendJsonMessage, lastJsonMessage } = useWebSocket(
-        username === '' ? '' : `${WS_URL}/play/${router.query.room}?username=${username}`
+        router.query.username === undefined ? '' : `${WS_URL}/play/${router.query.room}?username=${router.query.username}`
     );
 
     useEffect(() => {
@@ -57,6 +58,7 @@ const room = () => {
             }
             else if (lastJsonMessage.type === PlayerLeft){
                 console.log(`${lastJsonMessage.username} left room`)
+                if (selectedChar == playerCount - 1) selectOther(0)
                 changePlayerCount(Number(lastJsonMessage.data))
             }
             else if (lastJsonMessage.type === NewAdmin) {
@@ -78,37 +80,54 @@ const room = () => {
             }
             else if (lastJsonMessage.type === CharData){
                 const values = lastJsonMessage.data.split('&')
-                console.log(`got params for ${lastJsonMessage.username}`)
-                const char: Character = {
-                    username: values[0],
-                    id: values[1],
-                    main: values[2],
-                    body: values[3],
-                    health: values[4],
-                    job: values[5],
-                    hobby: values[6],
-                    phobia: values[7],
-                    item: values[8],
-                    info: values[9],
-                    ability: values[10],
+                let newChars: Array<Character> = []
+                const n = Number(values[0])
+                for (let i = 0; i < n; i++){
+                    const s = i * 11 + 1
+                    let lg = ''
+                    for (let j = 0; j < 11; j++) lg += values[s + j] + '\n'
+                    console.log(`got params for ${values[s]}:\n${lg}`)
+                    const char: Character = {
+                        username: values[s],
+                        id: values[s + 1],
+                        main: values[s + 2],
+                        body: values[s + 3],
+                        health: values[s + 4],
+                        job: values[s + 5],
+                        hobby: values[s + 6],
+                        phobia: values[s + 7],
+                        item: values[s + 8],
+                        info: values[s + 9],
+                        ability: values[s + 10],
+                    }
+                    newChars.push(char)
                 }
-                setChars([...chars, char])
+                setChars(newChars)
             }
         }
     }, [lastJsonMessage]);
 
     const handleStartGameButton = (e: React.SyntheticEvent) => {
         e.preventDefault()
-
         if (!admin) return
-
         sendJsonMessage(StartGame)
     }
 
     const handleConnectToRoomButton = (e: React.SyntheticEvent) => {
         e.preventDefault()
-
         router.push(`/play/${router.query.room}?username=${username}`)
+        return
+    }
+
+    const nextChar = (e: React.SyntheticEvent) => {
+        e.preventDefault()
+        selectOther((selectedChar + 1) % playerCount)
+        return
+    }
+
+    const prevChar = (e: React.SyntheticEvent) => {
+        e.preventDefault()
+        selectOther(selectedChar == 0 ? playerCount - 1 : selectedChar - 1)
         return
     }
 
@@ -121,6 +140,11 @@ const room = () => {
         if (n % 10 > 4 || n % 10 == 0 || (n >= 10 && n <= 20)) return 'месяцев'
         if (n % 10 == 1) return 'месяц'
         return 'месяца'
+    }
+
+    const getChar = (n: number) => {
+        if (chars.length == 0) return ''
+        return n == -1 ? chars[chars.length - 1].username : chars[n % chars.length].username
     }
 
     if (game.id === ''){
@@ -178,32 +202,23 @@ const room = () => {
     } else{
         return (
             <div className='p-6 flex items-start flex-col space-y-10 max-w-full'>
-                <div className='pl-6 space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
-                    <span><BlueText text={'Апокалипсис:'}/> {game.apocalypse}</span>
-                    <span><LightText text={'---УБЕЖИЩЕ---'}/></span>
+                <div
+                    className='pl-4 space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+                    <span className='text-center text-4xl'><LightText text={'АПОКАЛИПСИС'}/></span>
+                    <span className='pt-4'>{game.apocalypse}</span>
+                    <span className='py-4 text-center text-4xl'><LightText text={'УБЕЖИЩЕ'}/></span>
                     <span><BlueText text={'Вместимость:'}/> {game.size} {peopleEnding(game.size)}</span>
                     <span><BlueText text={'Нужно прожить:'}/> {game.time} {monthEnding(game.time)}</span>
                     <span><BlueText text={'Еды на:'}/> {game.food} {monthEnding(game.food)}</span>
                     <span><BlueText text={'Местоположение:'}/> {game.place}</span>
                     <span><BlueText text={'Комнаты:'}/> {game.rooms}</span>
                     <span><BlueText text={'Предметы:'}/> {game.resources}</span>
+                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}/>
+                    <div className='flex flex-row justify-evenly'>
+                        <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={prevChar}>{getChar(selectedChar-1)}</button>
+                        <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={nextChar}>{getChar(selectedChar+1)}</button>
+                    </div>
                 </div>
-                <table className='border-2 border-b-dark-primary border-collapse table-auto font-bold w-full'>
-                    <thead>
-                        <tr className='text-3xl'>
-                            <Top text={'Имя'}/>
-                            <Top text={'Главное'}/>
-                            <Top text={'Телосложение'}/>
-                            <Top text={'Здоровье'}/>
-                            <Top text={'Работа'}/>
-                            <Top text={'Хобби'}/>
-                            <Top text={'Фобия'}/>
-                            <Top text={'Предмет'}/>
-                            <Top text={'Доп информация'}/>
-                            <Top text={'Способность'}/>
-                        </tr>
-                    </thead>
-                </table>
             </div>
         )
     }

@@ -55,8 +55,6 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			break
 		}
 
-		log.Printf("recv: %s", string(packet[1:len(packet)-1]))
-
 		packetType := string(packet[1])
 		packetData := ""
 		if len(packet) > 3 {

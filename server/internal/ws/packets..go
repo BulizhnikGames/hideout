@@ -46,8 +46,10 @@ func HandleStartGame(hub *Hub, packet *Message) {
 			Data:     data,
 		}
 
+		data = strconv.Itoa(len(*characters))
 		for i, char := range *characters {
-			data = char.ID.String()
+			data += "&" + (*names)[i]
+			data += "&" + char.ID.String()
 			data += "&" + char.Main.String
 			data += "&" + char.Body.String
 			data += "&" + char.Health.String
@@ -57,13 +59,12 @@ func HandleStartGame(hub *Hub, packet *Message) {
 			data += "&" + char.Item.String
 			data += "&" + char.Info.String
 			data += "&" + char.Ability.String
-
-			hub.Broadcast <- &Message{
-				Type:     packets.CharData,
-				Username: (*names)[i],
-				RoomID:   packet.RoomID,
-				Data:     data,
-			}
+		}
+		hub.Broadcast <- &Message{
+			Type:     packets.CharData,
+			Username: "",
+			RoomID:   packet.RoomID,
+			Data:     data,
 		}
 	} else {
 		log.Println("Only admin can start game")
