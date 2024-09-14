@@ -7,3 +7,4 @@ const NewAdmin string = "3"     // from server
 const StartGame string = "4"    // from client
 const GameData string = "5"     // from server
 const CharData string = "6"     // from server
+const UpdateLock string = "7"   // both

@@ -65,6 +65,7 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 		Username: username,
 		RoomID:   room,
 		Admin:    admin,
+		Lock:     "000100000",
 	}
 
 	log.Printf("Added new player (%s) to room (%s), is admin: %v", player.Username, player.RoomID, player.Admin)

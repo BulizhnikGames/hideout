@@ -29,9 +29,9 @@ func GenerateMainStringForCharacter() string {
 
 	res := ""
 	if male {
-		res += "Мужчина"
+		res += "мужчина"
 	} else {
-		res += "Женщина"
+		res += "женщина"
 	}
 	res += " / " + strconv.Itoa(age)
 	if age%10 > 4 || age%10 == 0 || (age >= 10 && age <= 20) {

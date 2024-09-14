@@ -4,18 +4,26 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="basic game interface, passing chars to clients, reworking homepage and wait page for phone">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Bug fixes, displaying player's data and selecting different players to display data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/constants/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/constants/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/rowname.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/rowparam.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/top.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db/init/game/apocalypses.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/game/apocalypses.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/play/charinfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/abilities.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/abilities.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/bodies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/bodies.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/health.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/health.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/hobbies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/hobbies.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/items.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/items.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/jobs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/jobs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/phobias.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/phobias.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/internal/ws/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tools/character.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/tools/character.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tools/game.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +133,8 @@
     <MESSAGE value="Copying room link" />
     <MESSAGE value="Copying link to room new design, getting gamedata, storing and receiving from server player count" />
     <MESSAGE value="basic game interface, passing chars to clients, reworking homepage and wait page for phone" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic game interface, passing chars to clients, reworking homepage and wait page for phone" />
+    <MESSAGE value="Bug fixes, displaying player's data and selecting different players to display data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes, displaying player's data and selecting different players to display data" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

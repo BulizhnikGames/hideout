@@ -5,23 +5,25 @@ import (
 	"github.com/BulizhnikGames/hideout/internal/packets"
 	"log"
 	"strconv"
+	"strings"
 )
 
-var HandlersTable map[string]func(hub *Hub, packet *Message)
+var handlersTable map[string]func(hub *Hub, packet *Message)
 
 func Init() {
-	HandlersTable = make(map[string]func(hub *Hub, packet *Message))
-	HandlersTable[packets.TextMessage] = HandleTextMessage
-	HandlersTable[packets.StartGame] = HandleStartGame
+	handlersTable = make(map[string]func(hub *Hub, packet *Message))
+	handlersTable[packets.TextMessage] = handleTextMessage
+	handlersTable[packets.StartGame] = handleStartGame
+	handlersTable[packets.UpdateLock] = handleUpdateLock
 }
 
-func HandleTextMessage(hub *Hub, packet *Message) {
+func handleTextMessage(hub *Hub, packet *Message) {
 	log.Printf("Text message: %s", packet.Data)
 
 	hub.Broadcast <- packet
 }
 
-func HandleStartGame(hub *Hub, packet *Message) {
+func handleStartGame(hub *Hub, packet *Message) {
 	if hub.Rooms[packet.RoomID].Players[packet.Username].Admin {
 		game, characters, names, err := hub.startGame(context.Background(), hub.Rooms[packet.RoomID])
 		if err != nil {
@@ -59,6 +61,7 @@ func HandleStartGame(hub *Hub, packet *Message) {
 			data += "&" + char.Item.String
 			data += "&" + char.Info.String
 			data += "&" + char.Ability.String
+			data += "&" + hub.Rooms[packet.RoomID].Players[(*names)[i]].Lock
 		}
 		hub.Broadcast <- &Message{
 			Type:     packets.CharData,
@@ -68,5 +71,26 @@ func HandleStartGame(hub *Hub, packet *Message) {
 		}
 	} else {
 		log.Println("Only admin can start game")
+	}
+}
+
+func handleUpdateLock(hub *Hub, packet *Message) {
+	vals := strings.Split(packet.Data, "&")
+	username, lock := vals[0], vals[1]
+	oldLock := hub.Rooms[packet.RoomID].Players[username].Lock
+	newLock := ""
+	for i := 0; i < 9; i++ {
+		if oldLock == "1" || lock == "1" {
+			newLock += "1"
+		} else {
+			newLock += "0"
+		}
+	}
+	hub.Rooms[packet.RoomID].Players[username].Lock = newLock
+	hub.Broadcast <- &Message{
+		Type:     packets.UpdateLock,
+		Username: username,
+		RoomID:   packet.RoomID,
+		Data:     newLock,
 	}
 }

@@ -13,6 +13,7 @@ type Player struct {
 	RoomID      string    `json:"roomID"`
 	Admin       bool      `json:"admin"`
 	CharacterID uuid.UUID `json:"characterID"`
+	Lock        string    `json:"lock"`
 }
 
 type Message struct {
@@ -61,7 +62,7 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			packetData = string(packet[2 : len(packetData)-1])
 		}
 
-		if handler, ok := HandlersTable[packetType]; ok {
+		if handler, ok := handlersTable[packetType]; ok {
 			msg := &Message{
 				Type:     packetType,
 				RoomID:   p.RoomID,

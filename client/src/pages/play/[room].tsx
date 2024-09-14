@@ -1,13 +1,24 @@
 import React, {useState, useEffect} from "react";
 import { useRouter } from 'next/router'
-import {WS_URL, TextMessage, NewAdmin, StartGame, PlayerJoined, PlayerLeft, GameData, CharData} from "../../../constants";
+import {
+    WS_URL,
+    TextMessage,
+    NewAdmin,
+    StartGame,
+    PlayerJoined,
+    PlayerLeft,
+    GameData,
+    CharData,
+    UpdateLock
+} from "../../../constants";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import LinkBox from './link'
 import BlueText from "@/pages/play/blue";
 import LightText from "@/pages/play/light";
 import Char from "@/pages/play/charinfo"
+import {containsNewline} from "yaml/dist/compose/util-contains-newline";
 
-type Character = {
+export type Character = {
     username: string
     id: string
     main: string
@@ -19,6 +30,7 @@ type Character = {
     item: string
     info: string
     ability: string
+    lock: string
 }
 
 const room = () => {
@@ -83,9 +95,9 @@ const room = () => {
                 let newChars: Array<Character> = []
                 const n = Number(values[0])
                 for (let i = 0; i < n; i++){
-                    const s = i * 11 + 1
+                    const s = i * 12 + 1
                     let lg = ''
-                    for (let j = 0; j < 11; j++) lg += values[s + j] + '\n'
+                    for (let j = 0; j < 12; j++) lg += values[s + j] + '\n'
                     console.log(`got params for ${values[s]}:\n${lg}`)
                     const char: Character = {
                         username: values[s],
@@ -99,8 +111,32 @@ const room = () => {
                         item: values[s + 8],
                         info: values[s + 9],
                         ability: values[s + 10],
+                        lock: values[s + 11]
                     }
                     newChars.push(char)
+                }
+                setChars(newChars)
+            } else if (lastJsonMessage.type == UpdateLock){
+                let newChars: Array<Character> = []
+                for (let i = 0; i < chars.length; i++){
+                    if (chars[i].username != lastJsonMessage.username) newChars.push(chars[i])
+                    else {
+                        const char: Character = {
+                            username: chars[i].username,
+                            id: chars[i].id,
+                            main: chars[i].main,
+                            body: chars[i].body,
+                            health: chars[i].health,
+                            job: chars[i].job,
+                            hobby: chars[i].hobby,
+                            phobia: chars[i].phobia,
+                            item: chars[i].item,
+                            info: chars[i].info,
+                            ability: chars[i].ability,
+                            lock: lastJsonMessage.data
+                        }
+                        newChars.push(char)
+                    }
                 }
                 setChars(newChars)
             }
@@ -213,7 +249,7 @@ const room = () => {
                     <span><BlueText text={'Местоположение:'}/> {game.place}</span>
                     <span><BlueText text={'Комнаты:'}/> {game.rooms}</span>
                     <span><BlueText text={'Предметы:'}/> {game.resources}</span>
-                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}/>
+                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]} self={selectedChar >= chars.length ? false : username == chars[selectedChar].username}/>
                     <div className='flex flex-row justify-evenly'>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={prevChar}>{getChar(selectedChar-1)}</button>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={nextChar}>{getChar(selectedChar+1)}</button>
