@@ -79,12 +79,20 @@ func handleUpdateLock(hub *Hub, packet *Message) {
 	username, lock := vals[0], vals[1]
 	oldLock := hub.Rooms[packet.RoomID].Players[username].Lock
 	newLock := ""
+	isNew := false
 	for i := 0; i < 9; i++ {
-		if oldLock == "1" || lock == "1" {
+		if lock[i] == '1' && oldLock[i] == '0' {
+			isNew = true
+		}
+		if oldLock[i] == '1' || lock[i] == '1' {
 			newLock += "1"
 		} else {
 			newLock += "0"
 		}
+	}
+	if !isNew {
+		log.Print("No new data in updating lock")
+		return
 	}
 	hub.Rooms[packet.RoomID].Players[username].Lock = newLock
 	hub.Broadcast <- &Message{

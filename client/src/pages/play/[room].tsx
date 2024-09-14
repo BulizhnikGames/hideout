@@ -16,7 +16,6 @@ import LinkBox from './link'
 import BlueText from "@/pages/play/blue";
 import LightText from "@/pages/play/light";
 import Char from "@/pages/play/charinfo"
-import {containsNewline} from "yaml/dist/compose/util-contains-newline";
 
 export type Character = {
     username: string
@@ -155,6 +154,10 @@ const room = () => {
         return
     }
 
+    const updateLock = (lock: string, username: string) => {
+        sendJsonMessage(UpdateLock + username + '&' + lock)
+    }
+
     const nextChar = (e: React.SyntheticEvent) => {
         e.preventDefault()
         selectOther((selectedChar + 1) % playerCount)
@@ -249,7 +252,8 @@ const room = () => {
                     <span><BlueText text={'Местоположение:'}/> {game.place}</span>
                     <span><BlueText text={'Комнаты:'}/> {game.rooms}</span>
                     <span><BlueText text={'Предметы:'}/> {game.resources}</span>
-                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]} self={selectedChar >= chars.length ? false : username == chars[selectedChar].username}/>
+                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}
+                          self={selectedChar >= chars.length ? false : username == chars[selectedChar].username} handler={updateLock}/>
                     <div className='flex flex-row justify-evenly'>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={prevChar}>{getChar(selectedChar-1)}</button>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={nextChar}>{getChar(selectedChar+1)}</button>

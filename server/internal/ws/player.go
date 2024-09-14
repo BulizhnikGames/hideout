@@ -59,7 +59,7 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 		packetType := string(packet[1])
 		packetData := ""
 		if len(packet) > 3 {
-			packetData = string(packet[2 : len(packetData)-1])
+			packetData = string(packet[2 : len(packet)-1])
 		}
 
 		if handler, ok := handlersTable[packetType]; ok {
