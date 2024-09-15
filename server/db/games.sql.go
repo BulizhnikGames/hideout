@@ -105,6 +105,121 @@ func (q *Queries) GetRooms(ctx context.Context, limit int32) ([]string, error) {
 	return items, nil
 }
 
+const multiplyFood = `-- name: MultiplyFood :one
+UPDATE games
+SET food = food * 2
+WHERE id = $1
+RETURNING id, apocalypse, size, time, food, place, rooms, resources
+`
+
+func (q *Queries) MultiplyFood(ctx context.Context, id uuid.UUID) (Game, error) {
+	row := q.db.QueryRowContext(ctx, multiplyFood, id)
+	var i Game
+	err := row.Scan(
+		&i.ID,
+		&i.Apocalypse,
+		&i.Size,
+		&i.Time,
+		&i.Food,
+		&i.Place,
+		&i.Rooms,
+		&i.Resources,
+	)
+	return i, err
+}
+
+const newApocalypse = `-- name: NewApocalypse :one
+UPDATE games
+SET apocalypse = $2
+WHERE id = $1
+RETURNING id, apocalypse, size, time, food, place, rooms, resources
+`
+
+type NewApocalypseParams struct {
+	ID         uuid.UUID
+	Apocalypse sql.NullString
+}
+
+func (q *Queries) NewApocalypse(ctx context.Context, arg NewApocalypseParams) (Game, error) {
+	row := q.db.QueryRowContext(ctx, newApocalypse, arg.ID, arg.Apocalypse)
+	var i Game
+	err := row.Scan(
+		&i.ID,
+		&i.Apocalypse,
+		&i.Size,
+		&i.Time,
+		&i.Food,
+		&i.Place,
+		&i.Rooms,
+		&i.Resources,
+	)
+	return i, err
+}
+
+const newBunker = `-- name: NewBunker :one
+UPDATE games
+SET size = $2, time = $3, food = $4, place = $5, rooms = $6, resources = $7
+WHERE id = $1
+RETURNING id, apocalypse, size, time, food, place, rooms, resources
+`
+
+type NewBunkerParams struct {
+	ID        uuid.UUID
+	Size      sql.NullInt32
+	Time      sql.NullInt32
+	Food      sql.NullInt32
+	Place     sql.NullString
+	Rooms     sql.NullString
+	Resources sql.NullString
+}
+
+func (q *Queries) NewBunker(ctx context.Context, arg NewBunkerParams) (Game, error) {
+	row := q.db.QueryRowContext(ctx, newBunker,
+		arg.ID,
+		arg.Size,
+		arg.Time,
+		arg.Food,
+		arg.Place,
+		arg.Rooms,
+		arg.Resources,
+	)
+	var i Game
+	err := row.Scan(
+		&i.ID,
+		&i.Apocalypse,
+		&i.Size,
+		&i.Time,
+		&i.Food,
+		&i.Place,
+		&i.Rooms,
+		&i.Resources,
+	)
+	return i, err
+}
+
+const setFoodEqualToTime = `-- name: SetFoodEqualToTime :one
+UPDATE games
+SET food = time
+WHERE id = $1
+RETURNING id, apocalypse, size, time, food, place, rooms, resources
+`
+
+func (q *Queries) SetFoodEqualToTime(ctx context.Context, id uuid.UUID) (Game, error) {
+	row := q.db.QueryRowContext(ctx, setFoodEqualToTime, id)
+	var i Game
+	err := row.Scan(
+		&i.ID,
+		&i.Apocalypse,
+		&i.Size,
+		&i.Time,
+		&i.Food,
+		&i.Place,
+		&i.Rooms,
+		&i.Resources,
+	)
+	return i, err
+}
+
 const startGame = `-- name: StartGame :one
 INSERT INTO games (id, apocalypse, size, time, food, place, rooms, resources)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)

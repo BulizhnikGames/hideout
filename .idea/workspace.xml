@@ -4,9 +4,28 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Unlocking params for other players">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="project's struct fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/constants/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/constants/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/blue.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/blue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/canred.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/canred.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/charinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/gameinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/gameinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/light.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/light.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/link.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/link.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/modules/lock.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/lock.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/_app.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/games.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/games.sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/abilities.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/abilities.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/hobbies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/hobbies.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/init/character/jobs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/init/character/jobs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db/queries/games.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/db/queries/games.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/packets/packets.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/packets/packets.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/game.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/game.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,10 +103,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\goprojects\hideout\client\src\pages\play" />
+      <recent name="F:\goprojects\hideout\client\modules" />
       <recent name="F:\goprojects\hideout\server\internal\ws" />
       <recent name="F:\goprojects\hideout\server\db\init\game" />
       <recent name="F:\goprojects\hideout\server\db\schema" />
-      <recent name="F:\goprojects\hideout\server\db" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -119,7 +139,8 @@
     <MESSAGE value="Bug fixes, displaying player's data and selecting different players to display data" />
     <MESSAGE value="Char's params lock" />
     <MESSAGE value="Unlocking params for other players" />
-    <option name="LAST_COMMIT_MESSAGE" value="Unlocking params for other players" />
+    <MESSAGE value="project's struct fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="project's struct fixed" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

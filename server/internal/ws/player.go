@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 	"log"
+	"strings"
 )
 
 type Player struct {
@@ -56,10 +57,11 @@ func (p *Player) readMessage(hub *Hub) { //Broadcast message from client to othe
 			break
 		}
 
-		packetType := string(packet[1])
+		vals := strings.Split(string(packet), ":")
+		packetType := vals[0][1:]
 		packetData := ""
-		if len(packet) > 3 {
-			packetData = string(packet[2 : len(packet)-1])
+		if len(vals[1]) > 1 {
+			packetData = vals[1][:len(vals[1])-1]
 		}
 
 		if handler, ok := handlersTable[packetType]; ok {

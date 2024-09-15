@@ -9,12 +9,13 @@ import {
     PlayerLeft,
     GameData,
     CharData,
-    UpdateLock
+    UpdateLock, UpdateGame, NewParam, DeleteParam, UpdatedChar
 } from "../../../constants";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import LinkBox from '../../../modules/link'
-import Char from "../../../modules/charinfo"
-import GameInfo from "../../../modules/gameinfo";
+import LinkBox from './link'
+import Char from "./charinfo"
+import GameInfo from "./gameinfo"
+import Admin from "./admin"
 
 export type Character = {
     username: string
@@ -148,6 +149,30 @@ const room = () => {
                     }
                 }
                 setChars(newChars)
+            } else if (lastJsonMessage.type == UpdatedChar) {
+                let newChars: Array<Character> = []
+                const values = lastJsonMessage.data.split('&')
+                for (let i = 0; i < chars.length; i++){
+                    if (chars[i].username != lastJsonMessage.username) newChars.push(chars[i])
+                    else {
+                        const char: Character = {
+                            username: chars[i].username,
+                            id: chars[i].id,
+                            main: values[0],
+                            body: values[1],
+                            health: values[2],
+                            job: values[3],
+                            hobby: values[4],
+                            phobia: values[5],
+                            item: values[6],
+                            info: values[7],
+                            ability: values[8],
+                            lock: chars[i].lock
+                        }
+                        newChars.push(char)
+                    }
+                }
+                setChars(newChars)
             }
         }
     }, [lastJsonMessage]);
@@ -155,7 +180,7 @@ const room = () => {
     const handleStartGameButton = (e: React.SyntheticEvent) => {
         e.preventDefault()
         if (!admin) return
-        sendJsonMessage(StartGame)
+        sendJsonMessage(StartGame +":")
     }
 
     const handleConnectToRoomButton = (e: React.SyntheticEvent) => {
@@ -165,7 +190,7 @@ const room = () => {
     }
 
     const updateLock = (lock: string, username: string) => {
-        sendJsonMessage(UpdateLock + username + '&' + lock)
+        sendJsonMessage(UpdateLock + ":" + username + '&' + lock)
     }
 
     const nextChar = (e: React.SyntheticEvent) => {
@@ -180,10 +205,22 @@ const room = () => {
         return
     }
 
-
     const getChar = (n: number) => {
         if (chars.length == 0) return ''
         return n == -1 ? chars[chars.length - 1].username : chars[n % chars.length].username
+    }
+
+    const handleUpdateGame = (code: string) => {
+        sendJsonMessage(UpdateGame + ":" + code)
+    }
+
+    const handleUpdateChar = (op: number, code: string) => {
+        if (selectedChar >= chars.length) return
+        if (op == 0){
+            sendJsonMessage(NewParam + ":" + chars[selectedChar].username + code)
+        } else if (op == 1){
+            sendJsonMessage(DeleteParam + ":" + chars[selectedChar].username + code)
+        }
     }
 
     if (game.id === ''){
@@ -239,19 +276,44 @@ const room = () => {
             }
         }
     } else{
-        return (
-            <div className='p-4 flex items-start flex-col space-y-10 max-w-full'>
-                <div className='flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
-                    <GameInfo game={game} />
-                    <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}
-                          self={selectedChar >= chars.length ? false : username == chars[selectedChar].username} handler={updateLock}/>
-                    <div className='pt-3 flex flex-row justify-evenly'>
-                        <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={prevChar}>{getChar(selectedChar-1)}</button>
-                        <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={nextChar}>{getChar(selectedChar+1)}</button>
+        if (admin) {
+            return (
+                <div className='p-4 flex items-start flex-col space-y-10 max-w-full'>
+                    <div
+                        className='flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+                        <GameInfo game={game}/>
+                        <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}
+                              self={selectedChar >= chars.length ? false : username == chars[selectedChar].username}
+                              handler={updateLock}/>
+                        <div className='pt-3 flex flex-row justify-evenly'>
+                            <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12'
+                                    onClick={prevChar}>{getChar(selectedChar - 1)}</button>
+                            <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12'
+                                    onClick={nextChar}>{getChar(selectedChar + 1)}</button>
+                        </div>
+                        <Admin game={handleUpdateGame} char={handleUpdateChar}/>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div className='p-4 flex items-start flex-col space-y-10 max-w-full'>
+                    <div
+                        className='flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+                        <GameInfo game={game}/>
+                        <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}
+                              self={selectedChar >= chars.length ? false : username == chars[selectedChar].username}
+                              handler={updateLock}/>
+                        <div className='pt-3 flex flex-row justify-evenly'>
+                            <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12'
+                                    onClick={prevChar}>{getChar(selectedChar - 1)}</button>
+                            <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12'
+                                    onClick={nextChar}>{getChar(selectedChar + 1)}</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 

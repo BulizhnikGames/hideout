@@ -1,5 +1,5 @@
-import LightText from "../modules/light";
-import BlueText from "../modules/blue";
+import LightText from "./light";
+import BlueText from "./blue";
 import React from "react";
 import {Game} from "@/pages/play/[room]";
 
@@ -18,7 +18,7 @@ const GameInfo = ({game}: {game: Game}) =>{
     return (
         <div className='space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
             <span className='text-center text-4xl'><LightText text={'АПОКАЛИПСИС'}/></span>
-            <span className='pt-2'>{game.apocalypse}</span>
+            <span className='pt-2 text-'>{game.apocalypse}</span>
             <span className='py-4 text-center text-4xl'><LightText text={'УБЕЖИЩЕ'}/></span>
             <span><BlueText text={'Вместимость:'}/> {game.size} {peopleEnding(game.size)}</span>
             <span><BlueText text={'Нужно прожить:'}/> {game.time} {monthEnding(game.time)}</span>

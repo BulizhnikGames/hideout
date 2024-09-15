@@ -25,3 +25,27 @@ LIMIT $1;
 SELECT val FROM resources
 ORDER BY RANDOM()
 LIMIT $1;
+
+-- name: SetFoodEqualToTime :one
+UPDATE games
+SET food = time
+WHERE id = $1
+RETURNING *;
+
+-- name: MultiplyFood :one
+UPDATE games
+SET food = food * 2
+WHERE id = $1
+RETURNING *;
+
+-- name: NewApocalypse :one
+UPDATE games
+SET apocalypse = $2
+WHERE id = $1
+RETURNING *;
+
+-- name: NewBunker :one
+UPDATE games
+SET size = $2, time = $3, food = $4, place = $5, rooms = $6, resources = $7
+WHERE id = $1
+RETURNING *;

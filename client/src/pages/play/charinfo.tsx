@@ -1,8 +1,8 @@
 import React from 'react';
-import LightText from "../modules/light";
-import Blue from "../modules/blue";
-import RedText from "../modules/canred";
-import LockText from "../modules/lock";
+import LightText from "./light";
+import Blue from "./blue";
+import RedText from "./canred";
+import LockText from "./lock";
 import {Character} from "@/pages/play/[room]";
 
 const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler : any}) => {
