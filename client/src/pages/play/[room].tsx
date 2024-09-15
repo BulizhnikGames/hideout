@@ -12,10 +12,9 @@ import {
     UpdateLock
 } from "../../../constants";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import LinkBox from './link'
-import BlueText from "@/pages/play/blue";
-import LightText from "@/pages/play/light";
-import Char from "@/pages/play/charinfo"
+import LinkBox from '../../../modules/link'
+import Char from "../../../modules/charinfo"
+import GameInfo from "../../../modules/gameinfo";
 
 export type Character = {
     username: string
@@ -32,9 +31,20 @@ export type Character = {
     lock: string
 }
 
+export type Game = {
+    id:  string
+    apocalypse: string
+    size: number
+    time: number
+    food: number
+    place: string
+    rooms: string
+    resources: string
+}
+
 const room = () => {
     const [admin, setAdmin] = useState(false)
-    const [game, setGame] = useState({
+    const [game, setGame] = useState<Game>({
         id: '',
         apocalypse: '',
         size: 0,
@@ -170,16 +180,6 @@ const room = () => {
         return
     }
 
-    const peopleEnding = (n: number) =>{
-        if (n == 2 || n == 3 || n == 4) return 'человека'
-        return 'человек'
-    }
-
-    const monthEnding = (n: number) => {
-        if (n % 10 > 4 || n % 10 == 0 || (n >= 10 && n <= 20)) return 'месяцев'
-        if (n % 10 == 1) return 'месяц'
-        return 'месяца'
-    }
 
     const getChar = (n: number) => {
         if (chars.length == 0) return ''
@@ -240,21 +240,12 @@ const room = () => {
         }
     } else{
         return (
-            <div className='p-6 flex items-start flex-col space-y-10 max-w-full'>
-                <div
-                    className='pl-4 space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
-                    <span className='text-center text-4xl'><LightText text={'АПОКАЛИПСИС'}/></span>
-                    <span className='pt-4'>{game.apocalypse}</span>
-                    <span className='py-4 text-center text-4xl'><LightText text={'УБЕЖИЩЕ'}/></span>
-                    <span><BlueText text={'Вместимость:'}/> {game.size} {peopleEnding(game.size)}</span>
-                    <span><BlueText text={'Нужно прожить:'}/> {game.time} {monthEnding(game.time)}</span>
-                    <span><BlueText text={'Еды на:'}/> {game.food} {monthEnding(game.food)}</span>
-                    <span><BlueText text={'Местоположение:'}/> {game.place}</span>
-                    <span><BlueText text={'Комнаты:'}/> {game.rooms}</span>
-                    <span><BlueText text={'Предметы:'}/> {game.resources}</span>
+            <div className='p-4 flex items-start flex-col space-y-10 max-w-full'>
+                <div className='flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+                    <GameInfo game={game} />
                     <Char c={selectedChar >= chars.length ? null : chars[selectedChar]}
                           self={selectedChar >= chars.length ? false : username == chars[selectedChar].username} handler={updateLock}/>
-                    <div className='flex flex-row justify-evenly'>
+                    <div className='pt-3 flex flex-row justify-evenly'>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={prevChar}>{getChar(selectedChar-1)}</button>
                         <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12' onClick={nextChar}>{getChar(selectedChar+1)}</button>
                     </div>

@@ -48,15 +48,6 @@ const index = () => {
     const createWSConnection = (id: string) => {
         router.push(`/play/${id}?username=${username}`)
         return
-
-        /*const ws = new WebSocket(`${WS_URL}/play/${id}?username=${username}`)
-        if (ws.OPEN){
-            // TODO set ws connection and router
-            setConn(ws)
-            console.log("ws")
-            router.push(`/play/${id}?username=${username}`)
-            return
-        }*/
     }
 
     return (

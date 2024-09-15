@@ -1,8 +1,8 @@
 import React from 'react';
-import LightText from "@/pages/play/light";
-import Blue from "@/pages/play/blue";
-import RedText from "@/pages/play/canred";
-import LockText from "@/pages/play/lock";
+import LightText from "../modules/light";
+import Blue from "../modules/blue";
+import RedText from "../modules/canred";
+import LockText from "../modules/lock";
 import {Character} from "@/pages/play/[room]";
 
 const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler : any}) => {
@@ -13,8 +13,7 @@ const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler
     }
     if (self) {
         return (
-            <div
-                className='space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+            <div className='space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
                 <span className='py-4 text-center text-4xl'><LightText text={c.username}/>{'\n'}</span>
                 <button className='py-1 bg-blue rounded-md align-text-top' onClick={() => handler('100000000', c.username)}>
                     <LockText text={'Основное:'} lock={c.lock[0] == '0'}/> {c.main}
@@ -47,9 +46,8 @@ const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler
         )
     } else {
         return (
-            <div
-                className='space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
-            <span className='py-4 text-center text-4xl'><LightText text={c.username}/>{'\n'}</span>
+            <div className='space-y-3 flex flex-col align-top font-bold text-start text-3xl text-wrap leading-10 break-words'>
+                <span className='py-4 text-center text-4xl'><LightText text={c.username}/>{'\n'}</span>
                 <span><Blue text={'Основное:'}/>{' '}
                     <RedText text={c.lock[0] == '1' ? c.main : 'скрыто'} r={c.lock[0] == '1'}/></span>
                 <span><Blue text={'Телосложение:'}/>{' '}

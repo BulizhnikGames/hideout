@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Char's params lock">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="Unlocking params for other players">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/tailwind.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/player.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/player.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +118,8 @@
     <MESSAGE value="basic game interface, passing chars to clients, reworking homepage and wait page for phone" />
     <MESSAGE value="Bug fixes, displaying player's data and selecting different players to display data" />
     <MESSAGE value="Char's params lock" />
-    <option name="LAST_COMMIT_MESSAGE" value="Char's params lock" />
+    <MESSAGE value="Unlocking params for other players" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unlocking params for other players" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
