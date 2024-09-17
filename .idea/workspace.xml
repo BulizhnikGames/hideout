@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="project's structure reversed, basic admin panel">
+    <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="moved main.go to server dir">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/internal/ws/packets..go" beforeDir="false" afterPath="$PROJECT_DIR$/server/internal/ws/packets..go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/constants/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/constants/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/main.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/tools/constants.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/tools/constants.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +76,7 @@
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;go.sdk&quot;,
     &quot;ts.external.directory.path&quot;: &quot;F:\\goprojects\\hideout\\client\\node_modules\\typescript\\lib&quot;
   }
 }</component>
@@ -84,11 +91,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\goprojects\hideout\server" />
       <recent name="F:\goprojects\hideout\client\src\pages\play" />
       <recent name="F:\goprojects\hideout\client\modules" />
       <recent name="F:\goprojects\hideout\server\internal\ws" />
       <recent name="F:\goprojects\hideout\server\db\init\game" />
-      <recent name="F:\goprojects\hideout\server\db\schema" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -122,7 +129,8 @@
     <MESSAGE value="Unlocking params for other players" />
     <MESSAGE value="project's struct fixed" />
     <MESSAGE value="project's structure reversed, basic admin panel" />
-    <option name="LAST_COMMIT_MESSAGE" value="project's structure reversed, basic admin panel" />
+    <MESSAGE value="moved main.go to server dir" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved main.go to server dir" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

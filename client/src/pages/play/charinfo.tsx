@@ -5,7 +5,7 @@ import RedText from "./canred";
 import LockText from "./lock";
 import {Character} from "@/pages/play/[room]";
 
-const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler : any}) => {
+const Char = ({c, self, handler}: {c : Character | null, self : boolean, handler : (a: string, b: string) => void}) => {
     if (c === null || c.lock.length < 9) {
         return (
             <div></div>

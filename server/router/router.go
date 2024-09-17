@@ -23,8 +23,8 @@ func InitRouter(wsHandler *ws.Handler) {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	r.POST("/play", wsHandler.CreateRoom)
-	r.GET("/play/:roomID", wsHandler.JoinRoom)
+	r.POST("/api/play", wsHandler.CreateRoom)
+	r.GET("/api/play/:roomID", wsHandler.JoinRoom)
 }
 
 func Start(addr string) error {

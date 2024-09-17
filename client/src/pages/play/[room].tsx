@@ -11,7 +11,7 @@ import {
     CharData,
     UpdateLock, UpdateGame, NewParam, DeleteParam, UpdatedChar
 } from "../../../constants";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import LinkBox from './link'
 import Char from "./charinfo"
 import GameInfo from "./gameinfo"
@@ -43,7 +43,14 @@ export type Game = {
     resources: string
 }
 
-const room = () => {
+type Message = {
+    type: string
+    roomID: string
+    username: string
+    data: string
+}
+
+const Room = () => {
     const [admin, setAdmin] = useState(false)
     const [game, setGame] = useState<Game>({
         id: '',
@@ -67,28 +74,30 @@ const room = () => {
         router.query.username === undefined ? '' : `${WS_URL}/play/${router.query.room}?username=${router.query.username}`
     );
 
+    console.log(`garbage log: ${readyState}`)
+
     useEffect(() => {
         if (username === 'undefined') return
 
         if (lastJsonMessage) {
-            //console.log(`got new message: ${lastJsonMessage.type} ${lastJsonMessage.data}`)
+            const m = lastJsonMessage as Message
 
-            if (lastJsonMessage.type === TextMessage) console.log(lastJsonMessage.data)
-            else if (lastJsonMessage.type === PlayerJoined) {
-                console.log(`${lastJsonMessage.username} joined room`)
-                changePlayerCount(Number(lastJsonMessage.data))
+            if (m.type === TextMessage) console.log(m.data)
+            else if (m.type === PlayerJoined) {
+                console.log(`${m.username} joined room`)
+                changePlayerCount(Number(m.data))
             }
-            else if (lastJsonMessage.type === PlayerLeft){
-                console.log(`${lastJsonMessage.username} left room`)
+            else if (m.type === PlayerLeft){
+                console.log(`${m.username} left room`)
                 if (selectedChar == playerCount - 1) selectOther(0)
-                changePlayerCount(Number(lastJsonMessage.data))
+                changePlayerCount(Number(m.data))
             }
-            else if (lastJsonMessage.type === NewAdmin) {
-                console.log(`New admin has been set: ${lastJsonMessage.data}`)
-                setAdmin(lastJsonMessage.data === username)
+            else if (m.type === NewAdmin) {
+                console.log(`New admin has been set: ${m.data}`)
+                setAdmin(m.data === username)
             }
-            else if (lastJsonMessage.type === GameData){
-                const values = lastJsonMessage.data.split('&')
+            else if (m.type === GameData){
+                const values = m.data.split('&')
                 setGame({
                     id: values[0],
                     apocalypse: values[1],
@@ -100,9 +109,9 @@ const room = () => {
                     resources: values[7],
                 })
             }
-            else if (lastJsonMessage.type === CharData){
-                const values = lastJsonMessage.data.split('&')
-                let newChars: Array<Character> = []
+            else if (m.type === CharData){
+                const values = m.data.split('&')
+                const newChars: Array<Character> = []
                 const n = Number(values[0])
                 for (let i = 0; i < n; i++){
                     const s = i * 12 + 1
@@ -126,10 +135,10 @@ const room = () => {
                     newChars.push(char)
                 }
                 setChars(newChars)
-            } else if (lastJsonMessage.type == UpdateLock){
-                let newChars: Array<Character> = []
+            } else if (m.type == UpdateLock){
+                const newChars: Array<Character> = []
                 for (let i = 0; i < chars.length; i++){
-                    if (chars[i].username != lastJsonMessage.username) newChars.push(chars[i])
+                    if (chars[i].username != m.username) newChars.push(chars[i])
                     else {
                         const char: Character = {
                             username: chars[i].username,
@@ -143,17 +152,17 @@ const room = () => {
                             item: chars[i].item,
                             info: chars[i].info,
                             ability: chars[i].ability,
-                            lock: lastJsonMessage.data
+                            lock: m.data
                         }
                         newChars.push(char)
                     }
                 }
                 setChars(newChars)
-            } else if (lastJsonMessage.type == UpdatedChar) {
-                let newChars: Array<Character> = []
-                const values = lastJsonMessage.data.split('&')
+            } else if (m.type == UpdatedChar) {
+                const newChars: Array<Character> = []
+                const values = m.data.split('&')
                 for (let i = 0; i < chars.length; i++){
-                    if (chars[i].username != lastJsonMessage.username) newChars.push(chars[i])
+                    if (chars[i].username != m.username) newChars.push(chars[i])
                     else {
                         const char: Character = {
                             username: chars[i].username,
@@ -189,7 +198,7 @@ const room = () => {
         return
     }
 
-    const updateLock = (lock: string, username: string) => {
+    const updateLock = (lock: string, username: string) : void => {
         sendJsonMessage(UpdateLock + ":" + username + '&' + lock)
     }
 
@@ -210,11 +219,11 @@ const room = () => {
         return n == -1 ? chars[chars.length - 1].username : chars[n % chars.length].username
     }
 
-    const handleUpdateGame = (code: string) => {
+    const handleUpdateGame = (code: string) : void => {
         sendJsonMessage(UpdateGame + ":" + code)
     }
 
-    const handleUpdateChar = (op: number, code: string) => {
+    const handleUpdateChar = (op: number, code: string) : void => {
         if (selectedChar >= chars.length) return
         if (op == 0){
             sendJsonMessage(NewParam + ":" + chars[selectedChar].username + code)
@@ -317,4 +326,4 @@ const room = () => {
     }
 }
 
-export default room
+export default Room

@@ -3,7 +3,7 @@ import {API_URL} from '../../constants';
 import { useRouter } from 'next/router'
 
 
-const index = () => {
+const Index = () => {
     const [username, setUsername] = useState('')
     const [room, setRoom] = useState('')
     const [buttonText, changeButtonText] = useState('СОЗДАТЬ')
@@ -78,4 +78,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index

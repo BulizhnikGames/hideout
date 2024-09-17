@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import LightText from "./light";
 import ErrorText from "./errortext";
 
-const Admin = ({game, char} : {game : any, char : any}) => {
+const Admin = ({game, char} : {game : (a: string) => void, char : (a: number, b: string) => void}) => {
     const [newInput, changeNew] = useState('0')
     const [deleteInput, changeDelete] = useState('0')
 

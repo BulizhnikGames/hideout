@@ -1,5 +1,5 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://192.168.103.132:8080'
-export const WS_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://192.168.103.132:8080'
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://hideoutgame.ru/api'
+export const WS_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://hideoutgame.ru/api'
 
 export const TextMessage = '0'
 export const PlayerJoined = '1'
