@@ -7,7 +7,7 @@ const LinkBox = () => {
     const copyLinkToRoom = async (e: React.SyntheticEvent) => {
         e.preventDefault()
         try{
-            await navigator.clipboard.writeText(`http://192.168.103.132:3000/play/${router.query.room}`)
+            await navigator.clipboard.writeText(`http://hideoutgame.ru/play/${router.query.room}`)
         } catch (err){
             console.log(err)
         }
@@ -15,8 +15,8 @@ const LinkBox = () => {
     }
 
     return (
-        <button className='p-6 mt-6 rounded-md bg-lightblue text-white text-2xl font-bold' onClick={copyLinkToRoom}>
-            http://hideout/play/{router.query.room}
+        <button className='p-3 mt-6 rounded-md bg-lightblue text-white font-bold' onClick={copyLinkToRoom}>
+            http://hideoutgame.ru/play/{router.query.room}
         </button>
     )
 }

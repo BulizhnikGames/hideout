@@ -9,7 +9,7 @@ import {
     PlayerLeft,
     GameData,
     CharData,
-    UpdateLock, UpdateGame, NewParam, DeleteParam, UpdatedChar
+    UpdateLock, UpdateGame, UpdatedChar
 } from "../../../constants";
 import useWebSocket from "react-use-websocket";
 import LinkBox from './link'
@@ -223,15 +223,6 @@ const Room = () => {
         sendJsonMessage(UpdateGame + ":" + code)
     }
 
-    const handleUpdateChar = (op: number, code: string) : void => {
-        if (selectedChar >= chars.length) return
-        if (op == 0){
-            sendJsonMessage(NewParam + ":" + chars[selectedChar].username + code)
-        } else if (op == 1){
-            sendJsonMessage(DeleteParam + ":" + chars[selectedChar].username + code)
-        }
-    }
-
     if (game.id === ''){
         if (!router.query.username || router.query.username === ''){
             return (
@@ -300,7 +291,7 @@ const Room = () => {
                             <button className='py-2 px-8 text-[18px] text-center text-white bg-blue rounded-md w-5/12'
                                     onClick={nextChar}>{getChar(selectedChar + 1)}</button>
                         </div>
-                        <Admin game={handleUpdateGame} char={handleUpdateChar}/>
+                        <Admin game={handleUpdateGame}/>
                     </div>
                 </div>
             )
