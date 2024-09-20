@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {API_URL} from '../../constants';
 import { useRouter } from 'next/router'
 
 
@@ -29,7 +28,7 @@ const Index = () => {
 
         try {
             if (room == '') {
-                const res = await fetch(`${API_URL}/play`, {
+                const res = await fetch(`api/play`, {
                     method: 'POST',
                 })
 
