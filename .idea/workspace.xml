@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3edde1b-376e-487b-a77e-3b0ab374f645" name="Changes" comment="current build save">
-      <change afterPath="$PROJECT_DIR$/client/.next.7z" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/[room].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/admin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/charinfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/gameinfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/gameinfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/play/link.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/play/link.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
