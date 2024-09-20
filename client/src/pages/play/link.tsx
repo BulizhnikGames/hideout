@@ -15,7 +15,7 @@ const LinkBox = () => {
     }
 
     return (
-        <button className='p-6 mt-6 rounded-md bg-lightblue text-white text-2xl font-bold' onClick={copyLinkToRoom}>
+        <button className='p-4 mt-6 rounded-md bg-lightblue text-white font-bold' onClick={copyLinkToRoom}>
             hideoutgame.ru/play/{router.query.room}
         </button>
     )
